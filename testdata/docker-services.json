@@ -1,0 +1,39 @@
+[
+  {
+    "ID": "service_web",
+    "Version": { "Index": 1 },
+    "Spec": {
+      "Name": "web",
+      "Labels": {
+        "autoscaler.enable": "true",
+        "autoscaler.target.cpu": "50",
+        "autoscaler.min": "2",
+        "autoscaler.max": "10"
+      },
+      "Mode": {
+        "Replicated": {
+          "Replicas": 3
+        }
+      }
+    }
+  },
+  {
+    "ID": "service_worker",
+    "Version": { "Index": 1 },
+    "Spec": {
+      "Name": "worker",
+      "Labels": {
+        "autoscaler.enable": "true",
+        "autoscaler.target.cpu": "70",
+        "autoscaler.min": "1",
+        "autoscaler.max": "5"
+      },
+      "Mode": {
+        "Replicated": {
+          "Replicas": 1
+        }
+      }
+    }
+  }
+]
+
