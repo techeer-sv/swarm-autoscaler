@@ -1,0 +1,2 @@
+# example docker swarm stack file for testing
+# should use traefik and some testing containers where we can simulate load
