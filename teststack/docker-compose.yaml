@@ -1,0 +1,35 @@
+services:
+  traefik:
+    image: traefik:v3.6.9
+    container_name: traefik
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--log.level=DEBUG"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  test_server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.test.loadbalancer.server.port=8000"
+      - "traefik.http.routers.test.rule=Host(`test.localhost`)"
+      - "traefik.http.routers.test.entrypoints=web"
+
+  test_server_2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.test.loadbalancer.server.port=8000"
+      - "traefik.http.routers.test.rule=Host(`test.localhost`)"
+      - "traefik.http.routers.test.entrypoints=web"
